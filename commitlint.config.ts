@@ -9,6 +9,8 @@ const config: UserConfig = {
     'subject-case': [RuleConfigSeverity.Disabled],
     // 日本語の句点も禁止する
     'subject-full-stop': [RuleConfigSeverity.Error, 'never', '。'],
+    // Issue とリンクさせるため、Issue 番号（#123）の記載を必須にする
+    'references-empty': [RuleConfigSeverity.Error, 'never'],
   },
 }
 

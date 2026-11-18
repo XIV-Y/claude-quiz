@@ -69,17 +69,16 @@ watch(isAnswered, async (answered) => {
           >
             {{ LABELS[index] }}
           </span>
-          <span class="pt-0.5">{{ choice.text }}</span>
-          <span
-            v-if="isAnswered && choice.isCorrect"
-            class="ml-auto shrink-0 pt-0.5 text-sm font-bold text-emerald-600"
-            >正解</span
-          >
-          <span
-            v-else-if="index === selectedIndex"
-            class="ml-auto shrink-0 pt-0.5 text-sm font-bold text-rose-600"
-            >あなたの回答</span
-          >
+          <!-- 正誤のラベルは本文の下に置き、狭い画面でも本文の幅を確保する -->
+          <span class="flex min-w-0 flex-col gap-1 pt-0.5">
+            <span>{{ choice.text }}</span>
+            <span v-if="isAnswered && choice.isCorrect" class="text-sm font-bold text-emerald-600">
+              {{ index === selectedIndex ? '✓ 正解（あなたの回答）' : '✓ 正解' }}
+            </span>
+            <span v-else-if="index === selectedIndex" class="text-sm font-bold text-rose-600">
+              × あなたの回答
+            </span>
+          </span>
         </button>
       </li>
     </ul>

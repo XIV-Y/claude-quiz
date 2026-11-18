@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+
+// public/ 配下のファイルは、公開先のパス（vite.config.ts の base）を前に付けて参照する
+const logoUrl = `${import.meta.env.BASE_URL}favicon.svg`
 </script>
 
 <template>
@@ -10,7 +13,7 @@ import { RouterLink, RouterView } from 'vue-router'
           :to="{ name: 'home' }"
           class="flex items-center gap-2 text-lg font-bold text-indigo-600 hover:text-indigo-700"
         >
-          <img src="/favicon.svg" alt="" class="size-7" />
+          <img :src="logoUrl" alt="" class="size-7" />
           Claude Quiz
         </RouterLink>
       </div>

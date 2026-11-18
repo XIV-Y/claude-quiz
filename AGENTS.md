@@ -82,3 +82,5 @@ npm run build
 - コンポーネントは `<script setup lang="ts">` で書く。
 - 整形は Prettier に任せる（設定は `.prettierrc.json`）。手で整形ルールを変えない。
 - 新しい依存パッケージを追加するときは、必要な理由を PR 本文に書く。
+- アプリは GitHub Pages の `/claude-quiz/` 配下で公開される（`vite.config.ts` の `base`）。`public/` 配下のファイルを `/favicon.svg` のような絶対パスで参照しない。コードからは `` `${import.meta.env.BASE_URL}favicon.svg` `` のように `BASE_URL` を付けて参照する（`index.html` 内は Vite が自動で付ける）。
+- GitHub Pages は存在しない URL で `index.html` を返せないため、ルーターはハッシュモードのままにする。

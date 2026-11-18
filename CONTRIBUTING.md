@@ -49,7 +49,7 @@
 
 <本文（任意）>
 
-<フッター（任意）>
+Refs #<Issue番号>
 ```
 
 ### type
@@ -83,9 +83,12 @@
 - 要約の次に空行を1行入れてから書きます。
 - 「何を」より「なぜ」変更したのかを書きます。
 
-### フッター（任意）
+### フッター（Issue 番号は必須）
 
-- 関連する Issue を `Refs #<Issue番号>` で書きます。
+- **すべてのコミットに、対応する Issue 番号を `Refs #<Issue番号>` の形で必ず書きます**（例：`Refs #12`）。
+  - `#12` のように書くと、GitHub 上でコミットと Issue が自動でリンクされ、Issue の画面からも関連コミットを辿れます。
+  - 複数の Issue に関係する場合は `Refs #12, #15` のように並べます。
+  - コミットでは `Closes #12` / `Fixes #12` は使いません。`main` に入った時点で Issue が自動で閉じてしまうためです。Issue を閉じる指定は PR の本文に書きます。
 - 破壊的変更がある場合は `BREAKING CHANGE: <内容>` を書きます。
 
 ### 例
@@ -115,6 +118,7 @@ Refs #34
 
 ### 自動チェック
 
+- Issue 番号（`#<数字>`）がないコミットメッセージは、commitlint でエラーになります。
 - `npm install` 時に Git フック（[simple-git-hooks](https://github.com/toplenboren/simple-git-hooks)）が設定され、コミット時に [commitlint](https://commitlint.js.org/) がメッセージをチェックします。
 - PR では GitHub Actions が、PR 内の全コミットのメッセージを再度チェックします。
 

@@ -1,18 +1,7 @@
 <script setup lang="ts">
-const message: string = 'Hello World'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <main>
-    <h1>{{ message }}</h1>
-  </main>
+  <RouterView />
 </template>
-
-<style scoped>
-main {
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  font-family: system-ui, sans-serif;
-}
-</style>

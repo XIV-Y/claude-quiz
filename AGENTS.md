@@ -16,14 +16,22 @@ AI コーディングエージェント（Claude Code など）向けの共通�
 ```
 src/
   main.ts        アプリのエントリーポイント
-  App.vue        ルートコンポーネント（RouterView のみ）
+  App.vue        ルートコンポーネント（共通ヘッダー + RouterView）
   router/        ルーティング定義
   views/         ルートに対応する画面コンポーネント
   components/    画面から使う部品
+  composables/   状態とロジック（例：useQuiz）
+  quizzes/       クイズの問題データ（1大カテゴリ＝1ファイル）と登録先の index.ts
+  types/         型定義（クイズのデータ型は quiz.ts）
+  utils/         汎用の関数
   assets/        CSS・画像など
 ```
 
 `@/` は `src/` のエイリアスです。
+
+## クイズの作成
+
+クイズ（問題データ）を作成・追加するときは、必ず [.claude/skills/create-quiz/SKILL.md](./.claude/skills/create-quiz/SKILL.md) の手順とルールに従ってください。Claude Code ではスキル `create-quiz` として読み込まれます。
 
 ## 作業の流れ
 

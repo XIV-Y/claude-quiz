@@ -33,6 +33,8 @@ src/
 
 クイズ（問題データ）を作成・追加するときは、必ず [.claude/skills/create-quiz/SKILL.md](./.claude/skills/create-quiz/SKILL.md) の手順とルールに従ってください。Claude Code ではスキル `create-quiz` として読み込まれます。
 
+クイズの元になった文章・資料・Web ページの出典（URL・サイト名など）や引用は、Issue・PR・コミットメッセージ・コード・ドキュメントのどこにも書きません。
+
 ## 作業の流れ
 
 必ず次の流れで作業します。`main` へ直接コミット・プッシュしてはいけません。

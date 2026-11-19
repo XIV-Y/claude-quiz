@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue'
-import type { Category, Question } from '@/types/quiz'
+import type { Question } from '@/types/quiz'
 import { shuffle } from '@/utils/shuffle'
 
 /** 画面に表示する選択肢 */
@@ -30,14 +30,14 @@ function present(question: Question): PresentedQuestion {
   }
 }
 
-/** カテゴリのクイズを1回分進めるための状態と操作 */
-export function useQuiz(category: Category) {
+/** 渡された問題でクイズを1回分進めるための状態と操作 */
+export function useQuiz(source: readonly Question[]) {
   const questions = ref<PresentedQuestion[]>([])
   const answers = ref<(number | null)[]>([])
   const currentIndex = ref(0)
 
   function start() {
-    questions.value = shuffle(category.questions).map(present)
+    questions.value = shuffle(source).map(present)
     answers.value = questions.value.map(() => null)
     currentIndex.value = 0
   }

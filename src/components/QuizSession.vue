@@ -3,13 +3,14 @@ import { computed } from 'vue'
 import QuizQuestionCard from '@/components/QuizQuestionCard.vue'
 import QuizResult from '@/components/QuizResult.vue'
 import { useQuiz } from '@/composables/useQuiz'
+import { allQuestions } from '@/quizzes'
 import type { Category } from '@/types/quiz'
 
 const props = defineProps<{
   category: Category
 }>()
 
-const quiz = useQuiz(props.category)
+const quiz = useQuiz(allQuestions(props.category))
 const { total, currentIndex, current, selectedIndex, isLast, isFinished, results, correctCount } =
   quiz
 

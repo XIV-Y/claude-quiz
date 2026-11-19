@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { findCategory } from '@/quizzes'
+import { findCategory, resolveQuizScope } from '@/quizzes'
 import HomeView from '@/views/HomeView.vue'
 
 const APP_NAME = 'Claude Quiz'
@@ -23,7 +23,14 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/quiz/:categoryId',
+      path: '/category/:categoryId',
+      name: 'category',
+      component: () => import('@/views/CategoryView.vue'),
+      props: true,
+    },
+    {
+      // サブ項目を省略するとカテゴリ内のすべての問題を出題する
+      path: '/quiz/:categoryId/:subcategoryId?',
       name: 'quiz',
       component: () => import('@/views/QuizView.vue'),
       props: true,
@@ -38,12 +45,19 @@ const router = createRouter({
   scrollBehavior: () => ({ top: 0 }),
 })
 
-// 存在しないカテゴリは「ページが見つかりません」を表示し、存在すればカテゴリ名をタイトルにする。
+// 存在しないカテゴリ・サブ項目は「ページが見つかりません」を表示し、存在すればその名前をタイトルにする。
 // 同じルートでパラメーターだけ変わる場合（URL の直接編集など）にも効くよう、全体のガードで判定する。
 router.beforeEach((to) => {
-  if (to.name !== 'quiz') return
-  const category = findCategory(String(to.params.categoryId))
-  if (!category) {
+  if (to.name !== 'category' && to.name !== 'quiz') return
+
+  const categoryId = String(to.params.categoryId)
+  const subcategoryId = to.params.subcategoryId ? String(to.params.subcategoryId) : undefined
+  const title =
+    to.name === 'category'
+      ? findCategory(categoryId)?.name
+      : resolveQuizScope(categoryId, subcategoryId)?.title
+
+  if (!title) {
     return {
       name: 'not-found',
       params: { pathMatch: to.path.slice(1).split('/') },
@@ -52,7 +66,7 @@ router.beforeEach((to) => {
       replace: true,
     }
   }
-  to.meta.title = category.name
+  to.meta.title = title
 })
 
 router.afterEach((to) => {

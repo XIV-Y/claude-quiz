@@ -2,15 +2,18 @@
 import { computed } from 'vue'
 import QuizQuestionCard from '@/components/QuizQuestionCard.vue'
 import QuizResult from '@/components/QuizResult.vue'
+import type { RouteLocationRaw } from 'vue-router'
 import { useQuiz } from '@/composables/useQuiz'
-import { allQuestions } from '@/quizzes'
-import type { Category } from '@/types/quiz'
+import type { Question } from '@/types/quiz'
 
 const props = defineProps<{
-  category: Category
+  questions: readonly Question[]
+  /** 結果画面の「戻る」ボタンの移動先 */
+  backTo: RouteLocationRaw
+  backLabel: string
 }>()
 
-const quiz = useQuiz(allQuestions(props.category))
+const quiz = useQuiz(props.questions)
 const { total, currentIndex, current, selectedIndex, isLast, isFinished, results, correctCount } =
   quiz
 
@@ -21,18 +24,17 @@ const progress = computed(() =>
 
 <template>
   <div>
-    <p class="text-sm font-bold text-indigo-600">{{ category.name }}</p>
-
     <QuizResult
       v-if="isFinished"
-      class="mt-4"
       :results="results"
       :correct-count="correctCount"
+      :back-to="backTo"
+      :back-label="backLabel"
       @restart="quiz.restart()"
     />
 
     <template v-else-if="current">
-      <div class="mt-2">
+      <div>
         <p class="text-sm text-slate-500">問題 {{ currentIndex + 1 }} / {{ total }}</p>
         <div
           class="mt-2 h-2 overflow-hidden rounded-full bg-slate-200"
@@ -56,6 +58,6 @@ const progress = computed(() =>
       />
     </template>
 
-    <p v-else class="mt-4 text-slate-500">このカテゴリにはまだ問題がありません。</p>
+    <p v-else class="mt-4 text-slate-500">まだ問題がありません。</p>
   </div>
 </template>

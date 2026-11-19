@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, type RouteLocationRaw } from 'vue-router'
 import type { QuestionResult } from '@/composables/useQuiz'
 
 const props = defineProps<{
   results: readonly QuestionResult[]
   correctCount: number
+  /** 「戻る」ボタンの移動先 */
+  backTo: RouteLocationRaw
+  backLabel: string
 }>()
 
 const emit = defineEmits<{
@@ -76,10 +79,10 @@ const message = computed(() => {
         もう一度挑戦する
       </button>
       <RouterLink
-        :to="{ name: 'home' }"
+        :to="backTo"
         class="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-center font-bold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
       >
-        カテゴリ一覧へ戻る
+        {{ backLabel }}
       </RouterLink>
     </div>
   </section>

@@ -8,7 +8,7 @@ import { allQuestions, categories } from '@/quizzes'
     <h1 class="text-2xl font-bold">カテゴリを選んでください</h1>
     <p class="mt-2 text-slate-600">選んだカテゴリの中から、学びたい項目を選べます。</p>
 
-    <ul v-if="categories.length > 0" class="mt-6 grid gap-4 sm:grid-cols-2">
+    <ul v-if="categories.length > 0" class="mt-6 grid gap-4">
       <li v-for="category in categories" :key="category.id">
         <LinkCard
           :to="{ name: 'category', params: { categoryId: category.id } }"

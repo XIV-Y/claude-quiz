@@ -37,7 +37,9 @@ export function useQuiz(source: readonly Question[]) {
   const currentIndex = ref(0)
 
   function start() {
-    questions.value = shuffle(source).map(present)
+    // 問題は基本から順に学べるよう、データに並べた順番で出題する。
+    // 選択肢はデータ上で正解が先頭にあるため、毎回シャッフルする。
+    questions.value = source.map(present)
     answers.value = questions.value.map(() => null)
     currentIndex.value = 0
   }
